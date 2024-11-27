@@ -4,7 +4,7 @@
     "description": "A handy template for creating discord bots in typescript.",
     "main": "build/index.js",
     "scripts": {
-        "start": "node dist/index.js",
+        "start": "node build/index.js",
         "dev": "nodemon",
         "build": "tsc",
         "lint": "eslint . --ext .ts",
