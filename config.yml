@@ -1,0 +1,5 @@
+debug: false
+
+purge:
+    enabled: true
+    interval: 5 # Number of backups to keep
