@@ -3,6 +3,8 @@ import { ClientOptions, Snowflake } from 'discord.js';
 import { Discore } from '../discore';
 
 export interface DiscoreOptions extends ClientOptions {
+    eventsPath: string;
+    commandsPath?: string;
     developers?: Snowflake[];
 }
 

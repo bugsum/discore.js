@@ -1,4 +1,6 @@
 import { createLogger, format, transports } from 'winston';
+import { fetchConfig } from '.';
+import path from 'node:path';
 
 const { combine, timestamp, printf, colorize, errors, json } = format;
 
@@ -7,9 +9,11 @@ const customFormat = printf(({ level, message, timestamp, stack }) => {
     return `${timestamp} [${level}]: ${stack || message}`;
 });
 
+const config = fetchConfig(path.join(process.cwd(), 'config.yml'));
+
 // Create the logger
 export const logger = createLogger({
-    level: 'info', // Default level
+    level: config?.debug ? 'debug' : 'info', // Default level
     format: combine(
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), // Add timestamp
         errors({ stack: true }), // Print stack traces for errors
@@ -24,11 +28,8 @@ export const logger = createLogger({
     ],
 });
 
-// Add console transport for development
-if (process.env.NODE_ENV !== 'production') {
-    logger.add(
-        new transports.Console({
-            format: combine(colorize(), customFormat), // Add colorized logs
-        }),
-    );
-}
+logger.add(
+    new transports.Console({
+        format: combine(colorize(), customFormat),
+    }),
+);

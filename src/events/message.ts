@@ -1,10 +1,9 @@
-import { createEvent } from '../utils/event';
-import { logger } from '../utils/logger';
+import { createEvent, logger } from '../utils';
 
 export default createEvent('messageCreate', false, (instance, message) => {
     if (message.author.id === instance.user?.id) return;
 
-    if (message.content === 'ping') {
-        message.reply('pong');
+    if (message.content === 'showping') {
+        message.reply(`My ping is ${instance.ws.ping}ms`);
     }
 });
